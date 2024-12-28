@@ -9,40 +9,39 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    protected $table = 'users'; // Specify the table name if different from the pluralized model name
+
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'TenantID',
+        'User Name',
+        'Email',
+        'Password',
+        'Role',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
+     * Get the tenant that owns the user.
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public function tenant()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsTo(Tenant::class, 'TenantID', 'TenantID');
+    }
+
+    /**
+     * Get the queries for the user.
+     */
+    public function queries()
+    {
+        return $this->hasMany(Query::class, 'User ID', 'User ID');
+    }
+
+    /**
+     * Get the patient records for the user if the user is a doctor.
+     */
+    public function patientRecords()
+    {
+        return $this->hasMany(PatientRecord::class, 'DoctorID', 'User ID')->where('Role', 'Doctor');
     }
 }
