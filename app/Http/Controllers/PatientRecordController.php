@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tenant;
+use App\Models\PatientRecord;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
-class TenantController extends Controller
+class PatientRecordController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class TenantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tenant $tenant)
+    public function show(PatientRecord $patientCase)
     {
         //
     }
@@ -42,7 +43,7 @@ class TenantController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tenant $tenant)
+    public function edit(PatientRecord $patientCase)
     {
         //
     }
@@ -50,7 +51,7 @@ class TenantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tenant $tenant)
+    public function update(Request $request, PatientRecord $patientCase)
     {
         //
     }
@@ -58,7 +59,7 @@ class TenantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tenant $tenant)
+    public function destroy(PatientRecord $patientCase)
     {
         //
     }

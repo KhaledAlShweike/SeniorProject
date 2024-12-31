@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('doctors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->id('DoctorID');
+            $table->string('DoctorName');
             $table->string('email')->unique();
             $table->text('password');
             $table->string('phone_number');
@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('role');
             $table->string('specialization');
             $table->string('clinic_address');
-            $table->foreignIdFor(Tenant::class)->onDelete('set null')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**

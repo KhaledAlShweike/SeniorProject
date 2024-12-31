@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table) {
-            $table->id('TenantID'); 
-            $table->string('TenantName');
-            $table->string('Address')->nullable();
-            $table->string('ContactDetails')->nullable();
+        Schema::create('diseases', function (Blueprint $table) {
+            $table->id('DiseaseID');
+            $table->string('DiseaseName');
+            $table->text('Description');
+            $table->text('CommonSymptoms');
+            $table->text('TreatmentOptions');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenants');
+        Schema::dropIfExists('diseases');
     }
 };

@@ -21,27 +21,18 @@ class User extends Authenticatable
         'Role',
     ];
 
-    /**
-     * Get the tenant that owns the user.
-     */
-    public function tenant()
+    public function institution()
     {
-        return $this->belongsTo(Tenant::class, 'TenantID', 'TenantID');
+        return $this->belongsTo(Institution::class, 'TenantID');
     }
 
-    /**
-     * Get the queries for the user.
-     */
-    public function queries()
+    public function accessLogs()
     {
-        return $this->hasMany(Query::class, 'User ID', 'User ID');
+        return $this->hasMany(AccessLog::class, 'UserID');
     }
 
-    /**
-     * Get the patient records for the user if the user is a doctor.
-     */
     public function patientRecords()
     {
-        return $this->hasMany(PatientRecord::class, 'DoctorID', 'User ID')->where('Role', 'Doctor');
+        return $this->hasMany(PatientRecord::class, 'UserID');
     }
 }

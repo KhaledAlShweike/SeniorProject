@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PatientCase;
+use App\Models\Symptom;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
-class PatientCaseController extends Controller
+class SymptomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class PatientCaseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PatientCase $patientCase)
+    public function show(Symptom $symptom)
     {
         //
     }
@@ -42,7 +43,7 @@ class PatientCaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PatientCase $patientCase)
+    public function edit(Symptom $symptom)
     {
         //
     }
@@ -50,7 +51,7 @@ class PatientCaseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PatientCase $patientCase)
+    public function update(Request $request, Symptom $symptom)
     {
         //
     }
@@ -58,7 +59,7 @@ class PatientCaseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PatientCase $patientCase)
+    public function destroy(Symptom $symptom)
     {
         //
     }
