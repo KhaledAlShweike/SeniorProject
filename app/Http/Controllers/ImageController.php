@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Symptom;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
-class SymptomController
+class ImageController
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class SymptomController
     /**
      * Display the specified resource.
      */
-    public function show(Symptom $symptom)
+    public function show(Image $image)
     {
         //
     }
@@ -42,7 +42,7 @@ class SymptomController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Symptom $symptom)
+    public function edit(Image $image)
     {
         //
     }
@@ -50,7 +50,7 @@ class SymptomController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Symptom $symptom)
+    public function update(Request $request, Image $image)
     {
         //
     }
@@ -58,7 +58,7 @@ class SymptomController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Symptom $symptom)
+    public function destroy(Image $image)
     {
         //
     }

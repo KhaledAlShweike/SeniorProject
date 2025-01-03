@@ -2,27 +2,36 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cases extends Model
 {
-    public function tenant()
+    use HasFactory;
+    protected $fillable = ['date', 'notes', 'default_case_privacy', 'institution_id'];
+
+    public function institution()
     {
-        return $this->belongsTo(Institution::class, 'TenantID');
+        return $this->belongsTo(Institution::class);
     }
 
-    public function patientRecord()
+    public function specialist()
     {
-        return $this->belongsTo(PatientRecord::class, 'PatientID');
+        return $this->belongsTo(Specialist::class);
     }
 
-    public function disease()
+    public function patient()
     {
-        return $this->belongsTo(Disease::class, 'DiseaseID');
+        return $this->belongsTo(Patient::class);
     }
 
-    public function symptom()
+    public function images()
     {
-        return $this->belongsTo(Symptom::class, 'SymptomID');
+        return $this->hasMany(Image::class);
+    }
+
+    public function symptoms()
+    {
+        return $this->belongsToMany(Symptom::class, 'case_symptoms');
     }
 }

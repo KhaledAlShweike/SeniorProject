@@ -2,22 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Institution extends Model
 {
-    public function users()
+    use HasFactory;
+    protected $fillable = ['name', 'address'];
+
+    public function specialists()
     {
-        return $this->hasMany(User::class, 'TenantID');
+        return $this->hasMany(Specialist::class);
     }
 
-    public function doctors()
+    public function cases()
     {
-        return $this->belongsToMany(Doctor::class, 'doctor_tenant', 'TenantID', 'DoctorID');
-    }
-
-    public function patientRecords()
-    {
-        return $this->hasMany(PatientRecord::class, 'TenantID');
+        return $this->hasMany(Cases::class);
     }
 }
