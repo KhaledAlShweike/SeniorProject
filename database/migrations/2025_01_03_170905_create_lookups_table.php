@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('lookups', function (Blueprint $table) {
             $table->id();
-            $table->string('list');
+            $table->integerIncrements('groupId');
+            $table
             $table->timestamps();
         });
     }
