@@ -62,4 +62,24 @@ class InstitutionController
     {
         //
     }
+    public function addInstitution(Request $request)
+    {
+        // التحقق من صحة البيانات
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'nullable|string|max:500',
+        ]);
+
+        // إضافة المؤسسة إلى قاعدة البيانات
+        $institution = Institution::create([
+            'name' => $validatedData['name'],
+            'address' => $validatedData['address'] ?? null,
+        ]);
+
+        // الاستجابة
+        return response()->json([
+            'message' => 'Institution added successfully',
+            'institution' => $institution,
+        ], 201);
+    }
 }
