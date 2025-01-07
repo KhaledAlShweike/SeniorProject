@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Institution;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
-class InstitutionController extends Controller
+class InstitutionController
 {
     /**
      * Display a listing of the resource.

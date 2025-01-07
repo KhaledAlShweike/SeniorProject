@@ -2,37 +2,30 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class user extends Model
 {
     use HasFactory;
-
-    protected $table = 'users'; // Specify the table name if different from the pluralized model name
-
     protected $fillable = [
-        'TenantID',
-        'User Name',
-        'Email',
-        'Password',
-        'Role',
+        'first_name', 'last_name', 'user_name', 'email', 'password', 'birthdate', 'gender', 'bio', 'profile_pic_url'
     ];
 
-    public function institution()
+    protected $hidden = ['password'];
+
+    public function documents()
     {
-        return $this->belongsTo(Institution::class, 'TenantID');
+        return $this->hasMany(Document::class);
     }
 
-    public function accessLogs()
+    public function contacts()
     {
-        return $this->hasMany(AccessLog::class, 'UserID');
+        return $this->hasMany(Contact::class);
     }
 
-    public function patientRecords()
+    public function queries()
     {
-        return $this->hasMany(PatientRecord::class, 'UserID');
+        return $this->hasMany(Query::class);
     }
 }
