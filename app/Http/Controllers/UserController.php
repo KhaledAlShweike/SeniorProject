@@ -1,70 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Hash;
 use App\Models\user;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+
 class UserController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(user $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(user $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, user $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(user $user)
-    {
-        //
-    }
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         // التحقق من البيانات
         $validatedData = $request->validate([
@@ -78,13 +24,13 @@ class UserController
             'bio' => 'nullable|string',
             'profile_pic_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-    
+
         // إذا كانت الصورة موجودة
         $photoPath = null;
         if ($request->hasFile('profile_pic_url')) {
             $photoPath = $request->file('profile_pic_url')->store('profile_pics', 'public');
         }
-    
+
         // حفظ بيانات المستخدم
         $user = new User();
         $user->first_name = $validatedData['first_name'];
@@ -97,14 +43,14 @@ class UserController
         $user->bio = $validatedData['bio'] ?? null;
         $user->profile_pic_url = $photoPath;  // حفظ مسار الصورة
         $user->save();
-    
+
         // الاستجابة
         return response()->json([
             'message' => 'User registered successfully',
             'user' => $user,
         ], 201);
     }
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
 
@@ -121,20 +67,20 @@ class UserController
     }
 
     // تسجيل الخروج
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         try {
             // الحصول على التوكن المرسل مع الطلب
             $token = JWTAuth::getToken();
-    
+
             // التحقق من وجود التوكن
             if (!$token) {
                 return response()->json(['error' => 'Token not provided'], 400);
             }
-    
+
             // إلغاء صلاحية التوكن
             JWTAuth::invalidate($token);
-    
+
             // إرسال استجابة بنجاح عملية تسجيل الخروج
             return response()->json(['message' => 'Successfully logged out']);
         } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {

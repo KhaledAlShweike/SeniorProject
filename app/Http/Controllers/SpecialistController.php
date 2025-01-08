@@ -7,58 +7,6 @@ use Illuminate\Http\Request;
 
 class SpecialistController
 {
-    /**
-     * Display a listing of the resource.
-     */
-   
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Specialist $specialist)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Specialist $specialist)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Specialist $specialist)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Specialist $specialist)
-    {
-        //
-    }
     public function register(Request $request)
     {
         $validatedData = $request->validate([
@@ -69,7 +17,7 @@ class SpecialistController
             'certified' => 'required|boolean',
             'institution_id' => 'required|exists:institutions,id',
             'bio' => 'nullable|string',
-           
+
         ]);
 
         $specialist = new Specialist();
