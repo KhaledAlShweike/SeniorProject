@@ -107,4 +107,105 @@ class UserController
             'expires_in' => config('jwt.ttl') * 60  // استخدام ttl من إعدادات JWT
         ]);
     }
+
+
+
+
+
+    ////////////////////////////////////للاطلاع غدا
+
+
+    <?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Models\Query;
+use App\Models\MedicalRecord;
+use App\Models\ResearchPaper;
+
+// 1. Endpoint for receiving user input (Text, Image, Voice)
+Route::post('/api/submit_query', function (Request $request) {
+    $data = $request->validate([
+        'type' => 'required|string',
+        'content' => 'required|string',
+    ]);
+
+    $query = Query::create([
+        'type' => $data['type'],
+        'content' => $data['content'],
+        'status' => 'received',
+    ]);
+
+    return response()->json(["message" => "Query received", "query_id" => $query->id], 200);
+});
+
+// 2. Endpoint to process the query (Interfacing with AI system)
+Route::post('/api/process_query/{query_id}', function ($query_id) {
+    $query = Query::find($query_id);
+
+    if (!$query) {
+        return response()->json(["error" => "Query not found"], 404);
+    }
+
+    // Mock AI processing logic
+    $ai_response = app('ai_system')->process($query->type, $query->content);
+
+    $query->update([
+        'status' => 'processed',
+        'results' => json_encode($ai_response),
+    ]);
+
+    return response()->json(["message" => "Query processed", "results" => $ai_response], 200);
+});
+
+// 3. Endpoint to aggregate results (Compile and return to front-end)
+Route::get('/api/get_results/{query_id}', function ($query_id) {
+    $query = Query::find($query_id);
+
+    if (!$query || $query->status !== 'processed') {
+        return response()->json(["error" => "Results not ready"], 404);
+    }
+
+    $related_papers = ResearchPaper::where('keywords', 'like', '%' . $query->content . '%')->get();
+
+    return response()->json([
+        "query_id" => $query_id,
+        "results" => json_decode($query->results, true),
+        "related_papers" => $related_papers,
+    ], 200);
+});
+
+// 4. Endpoint to store health records
+Route::post('/api/store_record', function (Request $request) {
+    $data = $request->validate([
+        'patient_id' => 'required|integer',
+        'doctor_id' => 'required|integer',
+        'diagnosis' => 'required|string',
+        'treatment_plan' => 'nullable|string',
+    ]);
+
+    $record = MedicalRecord::create([
+        'patient_id' => $data['patient_id'],
+        'doctor_id' => $data['doctor_id'],
+        'diagnosis' => $data['diagnosis'],
+        'treatment_plan' => $data['treatment_plan'],
+        'status' => 'stored',
+    ]);
+
+    return response()->json(["message" => "Record stored", "record_id" => $record->id], 200);
+});
+
+// 5. Endpoint to retrieve health records
+Route::get('/api/get_records/{patient_id}', function ($patient_id) {
+    $records = MedicalRecord::where('patient_id', $patient_id)->get();
+
+    if ($records->isEmpty()) {
+        return response()->json(["error" => "No records found"], 404);
+    }
+
+    return response()->json(["patient_id" => $patient_id, "records" => $records], 200);
+});
+
+?>
+
 }
