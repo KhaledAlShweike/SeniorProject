@@ -27,4 +27,10 @@ class Specialist extends Model
     {
         return $this->hasMany(Cases::class, 'specialist_id');
     }
+
+    public function medicalRecords()
+{
+    return $this->hasMany(MedicalRecord::class);
+}
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MedicalRecordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SpecialistController;
@@ -11,9 +12,9 @@ Route::middleware('auth:api')->get('/profile', function (Request $request) {
 
 Route::post('/specialist/register', [SpecialistController::class, 'register']);
 Route::get('/specialists', [SpecialistController::class, 'index']);
-////////////////////////
+
 Route::post('/institutions/add', [InstitutionController::class, 'addInstitution']);
-/////////////////////////////////
+
 Route::post('user/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 
@@ -25,3 +26,7 @@ Route::group([
 Route::post('/logout', [UserController::class, 'logout']);
 
 });
+
+Route::apiResource('medical-records', MedicalRecordController::class);
+
+

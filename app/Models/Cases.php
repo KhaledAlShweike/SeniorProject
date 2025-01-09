@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Cases extends Model
 {
     use HasFactory;
-    protected $fillable = ['date', 'notes', 'default_case_privacy', 'institution_id'];
+
+    protected $table = 'cases';
+
+    protected $fillable = [
+        'specialist_id',
+        'patient_id',
+        'isPrivate',
+        'treatment_plan',
+    ];
 
     public function institution()
     {
@@ -34,4 +42,15 @@ class Cases extends Model
     {
         return $this->belongsToMany(Symptom::class, 'case_symptoms');
     }
+
+    public function diagnoses()
+    {
+        return $this->hasMany(Diagnosis::class, 'case_id');
+    }
+
+    public function visits()
+    {
+        return $this->hasMany(Visit::class, 'case_id');
+    }
+
 }

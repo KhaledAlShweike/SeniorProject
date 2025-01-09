@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Patient;
+use App\Models\Specialist;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('cases', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Specialist::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Patient::class)->constrained()->onDelete('cascade');
+            $table->boolean('isPrivate');
             $table->dateTime('date');
             $table->text('notes')->nullable();
-            $table->boolean('default_case_privacy');
-            $table->foreignId('institution_id')->references('id')->on('institutions');
+            $table->text('treatment_plan')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +30,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cases');
+        Schema::table('cases', function (Blueprint $table) {
+            $table->dropForeign(['specialist_id']);
+            $table->dropForeign(['patient_id']);
+            $table->dropColumn('treatment_plan');
+        });
     }
 };
