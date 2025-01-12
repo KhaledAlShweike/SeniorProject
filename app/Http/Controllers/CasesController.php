@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\CaseModel;
 use App\Models\Cases;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
