@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'birthdate',
+        'gender',
+        'phone_number',
+    ];
 
     public function medicalRecords()
 {

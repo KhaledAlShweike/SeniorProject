@@ -20,7 +20,7 @@ class PatientController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'birthdate' => 'required|date',
-            'gender' => 'required|in:male,female,other',
+            'gender' => 'required|in:0,1,2',
             'phone_number' => 'nullable|string|max:20',
         ]);
 
@@ -40,7 +40,7 @@ class PatientController extends Controller
             'first_name' => 'sometimes|string|max:255',
             'last_name' => 'sometimes|string|max:255',
             'birthdate' => 'sometimes|date',
-            'gender' => 'sometimes|in:male,female,other',
+            'gender' => 'required|in:0,1,2',
             'phone_number' => 'nullable|string|max:20',
         ]);
 

@@ -41,5 +41,53 @@ class SpecialistController
     $specialists = Specialist::all();
     return response()->json($specialists);
 }
+public function deleteSpecialist($id)
+{
+    // ابحث عن المتخصص بناءً على id
+    $specialist = Specialist::find($id);
+
+    // تحقق إذا كان المتخصص موجودًا
+    if (!$specialist) {
+        return response()->json([
+            'message' => 'Specialist not found.'
+        ], 404);
+    }
+
+    // احذف المتخصص
+    $specialist->delete();
+
+    return response()->json([
+        'message' => 'Specialist deleted successfully.'
+    ], 200);
+}
+public function updateSpecialist(Request $request, $id)
+{
+    // ابحث عن المتخصص بناءً على id
+    $specialist = Specialist::find($id);
+
+    // تحقق إذا كان المتخصص موجودًا
+    if (!$specialist) {
+        return response()->json([
+            'message' => 'Specialist not found.'
+        ], 404);
+    }
+
+    // تحديث الحقول إذا تم إرسال قيم جديدة
+    $specialist->first_name = $request->input('first_name', $specialist->first_name);
+    $specialist->last_name = $request->input('last_name', $specialist->last_name);
+    $specialist->degree = $request->input('degree', $specialist->degree);
+    $specialist->specialization = $request->input('specialization', $specialist->specialization);
+    $specialist->bio = $request->input('bio', $specialist->bio);
+    $specialist->certified = $request->input('certified', $specialist->certified);
+    $specialist->institution_id = $request->input('institution_id', $specialist->institution_id);
+
+    // حفظ التغييرات في قاعدة البيانات
+    $specialist->save();
+
+    return response()->json([
+        'message' => 'Specialist updated successfully.',
+        'specialist' => $specialist
+    ], 200);
+}
 
 }
