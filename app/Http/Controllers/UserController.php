@@ -50,47 +50,49 @@ class UserController
             'user' => $user,
         ], 201);
     }
-    public function login(Request $request): JsonResponse
+    public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-
+        // التحقق من المدخلات
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
-
-        if (!$token = JWTAuth::attempt($credentials)) {
+    
+        // الحصول على بيانات الاعتماد من الطلب
+        $credentials = $request->only('email', 'password');
+    
+        // التحقق من وجود المستخدم
+        $user = User::where('email', $credentials['email'])->first();
+    
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
+    
+        // إنشاء التوكن باستخدام JWT
+        $token = JWTAuth::attempt($credentials);
+    
+        if (!$token) {
+            return response()->json(['error' => 'Could not create token'], 500);
+        }
+    
+        // استجابة مع التوكن
         return $this->respondWithToken($token);
     }
 
     // تسجيل الخروج
-    public function logout(Request $request): JsonResponse
-    {
-        try {
-            // الحصول على التوكن المرسل مع الطلب
-            $token = JWTAuth::getToken();
+    public function logout()
+{
+    try {
+        // إبطال صلاحية التوكن الحالي
+        JWTAuth::invalidate(JWTAuth::getToken());
 
-            // التحقق من وجود التوكن
-            if (!$token) {
-                return response()->json(['error' => 'Token not provided'], 400);
-            }
-
-            // إلغاء صلاحية التوكن
-            JWTAuth::invalidate($token);
-
-            // إرسال استجابة بنجاح عملية تسجيل الخروج
-            return response()->json(['message' => 'Successfully logged out']);
-        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['error' => 'Invalid token'], 401);
-        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['error' => 'Token expired'], 401);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to logout, please try again'], 500);
-        }
+        return response()->json(['message' => 'Successfully logged out']);
+    } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+        return response()->json(['error' => 'Invalid token'], 401);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'An error occurred while logging out'], 500);
     }
+}
 
     // تحديث التوكن
     public function refresh()
