@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CasesController;
 use App\Http\Controllers\MedicalRecordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,3 +42,11 @@ Route::group([
 Route::apiResource('medical-records', MedicalRecordController::class);
 
 
+// Define API Routes for CasesController
+Route::prefix('cases')->group(function () {
+    Route::get('/', [CasesController::class, 'index']);
+    Route::post('/', [CasesController::class, 'store']);
+    Route::get('/{id}', [CasesController::class, 'show']);
+    Route::put('/{id}', [CasesController::class, 'update']);
+    Route::delete('/{id}', [CasesController::class, 'destroy']);
+});
