@@ -20,7 +20,7 @@ class UserController
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'birthdate' => 'nullable|date',
-            'gender' => 'required|in: male, female',
+            'gender' => 'required|in:0,1',
             'bio' => 'nullable|string',
             'profile_pic_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);

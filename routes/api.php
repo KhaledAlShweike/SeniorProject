@@ -29,6 +29,8 @@ Route::post('/registerpatient', [PatientController::class, 'store']);
 Route::get('getpatientt/{id}', [PatientController::class, 'show']);
 Route::put('patientup/{id}', [PatientController::class, 'update']);
 Route::delete('patientdel/{id}', [PatientController::class, 'destroy']);
+///////////////////////////////
+Route::apiResource('medical-records', MedicalRecordController::class);
 
 Route::group([
     'middleware' => 'api',
@@ -38,6 +40,6 @@ Route::group([
 
 });
 
-Route::apiResource('medical-records', MedicalRecordController::class);
+
 
 
