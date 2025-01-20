@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Specialist::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Patient::class)->constrained()->onDelete('cascade');
-            $table->boolean('isPrivate');
+            $table->boolean('isPrivate')->default(0);
             $table->dateTime('date');
             $table->text('notes')->nullable();
             $table->text('treatment_plan')->nullable();

@@ -15,6 +15,8 @@ class Cases extends Model
         'specialist_id',
         'patient_id',
         'isPrivate',
+        'date',
+        'notes',
         'treatment_plan',
     ];
 

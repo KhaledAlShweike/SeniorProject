@@ -12,7 +12,8 @@ class VisitController
      */
     public function index()
     {
-        //
+        $visits = Visit::with('case')->get(); // تضمين بيانات الحالة المرتبطة
+        return response()->json($visits, 200);
     }
 
     /**
@@ -28,15 +29,24 @@ class VisitController
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'case_id' => 'required|exists:cases,id',
+            'date' => 'required|date',
+            'note' => 'nullable|string',
+        ]);
+    
+        $visit = Visit::create($data);
+    
+        return response()->json(['message' => 'Visit created successfully', 'visit' => $visit], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Visit $visit)
+    public function show($id)
     {
-        //
+        $visit = Visit::with('case')->findOrFail($id);
+        return response()->json($visit, 200);
     }
 
     /**
@@ -50,16 +60,27 @@ class VisitController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Visit $visit)
+    public function update(Request $request,$id )
     {
-        //
+        $data = $request->validate([
+            'date' => 'required|date',
+            'note' => 'nullable|string',
+        ]);
+    
+        $visit = Visit::findOrFail($id);
+        $visit->update($data);
+    
+        return response()->json(['message' => 'Visit updated successfully', 'visit' => $visit], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Visit $visit)
+    public function destroy($id)
     {
-        //
+        $visit = Visit::findOrFail($id);
+        $visit->delete();
+    
+        return response()->json(['message' => 'Visit deleted successfully'], 200);
     }
 }

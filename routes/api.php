@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\MedicalRecordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -7,6 +8,10 @@ use App\Http\Controllers\SpecialistController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CasesController;
+use App\Http\Controllers\VisitController;
+
+
 Route::middleware('auth:api')->get('/profile', function (Request $request) {
     return $request->user();
 });
@@ -31,6 +36,11 @@ Route::put('patientup/{id}', [PatientController::class, 'update']);
 Route::delete('patientdel/{id}', [PatientController::class, 'destroy']);
 ///////////////////////////////
 Route::apiResource('medical-records', MedicalRecordController::class);
+/////////////////////////////////
+Route::apiResource('cases', CasesController::class);
+/////////////////////////////////
+Route::apiResource('visits', VisitController::class);
+
 
 Route::group([
     'middleware' => 'api',
@@ -39,6 +49,7 @@ Route::group([
 
 
 });
+
 
 
 
