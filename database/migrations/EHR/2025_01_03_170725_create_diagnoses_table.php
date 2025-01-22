@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('diagnoses', function (Blueprint $table) {
+        Schema::connection('ehr')->create('diagnoses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('condition_id')->references('id')->on('conditions');
             $table->foreignId('symptom_id')->references('id')->on('symptoms');

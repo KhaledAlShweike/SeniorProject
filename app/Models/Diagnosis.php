@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Diagnosis extends Model
 {
     use HasFactory;
+
+    protected $connection = 'ehr';
+
     protected $fillable = ['condition_id', 'symptom_id', 'present', 'last_updated'];
 
     public function condition()

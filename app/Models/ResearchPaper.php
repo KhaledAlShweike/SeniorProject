@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ResearchPaper extends Model
 {
     use HasFactory;
+    protected $connection = 'mir';
+
 
     protected $fillable = ['title', 'url'];
 }

@@ -9,6 +9,8 @@ class MedicalRecord extends Model
 {
     use HasFactory;
 
+    protected $connection = 'ehr';
+
     protected $fillable = [
         'patient_id',
         'specialist_id',

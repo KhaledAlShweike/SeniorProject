@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::connection('ehr')->create('symptoms', function (Blueprint $table) {
             $table->id();
-            $table->integer('type');
-            $table->text('value');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->string('name');
+            $table->boolean('is_secret');
             $table->timestamps();
+            $table->index('name'); // Adding index for faster search
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('symptoms');
     }
 };

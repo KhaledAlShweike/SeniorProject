@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('mysql2')->create('research_papers', function (Blueprint $table) {
+        Schema::connection('ehr')->create('queries', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('url');
+            $table->dateTime('time');
+            $table->text('text');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('research_papers');
+        Schema::dropIfExists('queries');
     }
 };

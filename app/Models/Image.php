@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
+    protected $connection = 'ehr';
+
     protected $fillable = ['date', 'is_private', 'body_part', 'uploaded_by_patient', 'case_id'];
 
     public function case()

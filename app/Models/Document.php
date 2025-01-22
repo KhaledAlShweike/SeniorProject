@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
 use HasFactory;
+
+protected $connection = 'ehr';
+
     protected $fillable = ['url', 'user_id'];
 
     public function user()

@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::connection('ehr')->create('patients', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
-            $table->foreignid('user_id')->references('id')->on('users');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->date('birthdate')->nullable();
+            $table->boolean('gender')->nullable();
+            $table->string('phone_number')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('patients');
     }
 };

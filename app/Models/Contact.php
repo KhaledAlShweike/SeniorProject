@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
+
+    protected $connection = 'ehr';
+
     protected $fillable = ['type', 'value', 'user_id'];
 
     public function user()

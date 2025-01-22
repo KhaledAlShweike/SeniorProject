@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Symptom extends Model
 {
     use HasFactory;
+    protected $connection = 'ehr';
+
     protected $fillable = ['name', 'is_secret'];
 
     public function diagnoses()

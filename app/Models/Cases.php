@@ -9,6 +9,8 @@ class Cases extends Model
 {
     use HasFactory;
 
+    protected $connection = 'ehr';
+
     protected $table = 'cases';
 
     protected $fillable = [

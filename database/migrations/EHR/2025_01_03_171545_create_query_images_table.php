@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('symptoms', function (Blueprint $table) {
+        Schema::connection('ehr')->create('query_images', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->boolean('is_secret');
+            $table->foreignId('query_id')->references('id')->on('queries');
             $table->timestamps();
-            $table->index('name'); // Adding index for faster search
         });
     }
 
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('symptoms');
+        Schema::dropIfExists('query_images');
     }
 };

@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class CaseSymptom extends Model
 {
     use HasFactory;
+
+    protected $connection = 'ehr';
+
     protected $fillable = ['case_id', 'symptom_id'];
 
     public function case()

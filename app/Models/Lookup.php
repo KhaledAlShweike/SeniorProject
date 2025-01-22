@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Lookup extends Model
 {
     use HasFactory;
+
+    protected $connection = 'ehr';
+
     protected $fillable = ['group_id', 'value'];
 }

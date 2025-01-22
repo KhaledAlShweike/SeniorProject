@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Visit extends Model
 {
-
+    use HasFactory;
     protected $table = 'visits';
+    protected $connection = 'ehr';
+
 
     protected $fillable = [
         'date',
@@ -18,5 +21,4 @@ class Visit extends Model
     {
         return $this->belongsTo(Cases::class, 'case_id');
     }
-
 }

@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::connection('ehr')->create('institutions', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('date');
-            $table->text('note');
-            $table->foreignId('case_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('institutions');
     }
 };

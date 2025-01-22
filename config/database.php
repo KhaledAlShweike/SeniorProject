@@ -29,34 +29,49 @@ return [
     |
     */
 
- 'connections' => [
-    'mysql' => [ // First database (EHR_DB)
+  'connections' => [
+
+    // Your default application database connection
+    'mysql' => [
         'driver' => 'mysql',
         'host' => env('DB_HOST', '127.0.0.1'),
         'port' => env('DB_PORT', '3306'),
-        'database' => env('DB_DATABASE', 'EHR_DB'),
+        'database' => env('DB_DATABASE', 'your_default_db'),
         'username' => env('DB_USERNAME', 'root'),
         'password' => env('DB_PASSWORD', ''),
-        'charset' => 'utf8mb4',
-        'collation' => 'utf8mb4_unicode_ci',
-        'prefix' => '',
-        'strict' => true,
-        'engine' => null,
+        // ... other typical MySQL settings
     ],
-    'mysql2' => [ // Second database (MIR_DB)
+
+    // EHR_DB connection
+    'ehr' => [
         'driver' => 'mysql',
-        'host' => env('DB_HOST_SECOND', '127.0.0.1'),
-        'port' => env('DB_PORT_SECOND', '3306'),
-        'database' => env('DB_DATABASE_SECOND', 'MIR_DB'),
-        'username' => env('DB_USERNAME_SECOND', 'root'),
-        'password' => env('DB_PASSWORD_SECOND', ''),
+        'host' => env('EHR_DB_HOST', '127.0.0.1'),
+        'port' => env('EHR_DB_PORT', '3306'),
+        'database' => env('EHR_DB_DATABASE', 'EHR_DB'),  // or use .env
+        'username' => env('EHR_DB_USERNAME', 'root'),
+        'password' => env('EHR_DB_PASSWORD', ''),
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
         'prefix' => '',
         'strict' => true,
-        'engine' => null,
     ],
+
+    // MIR_DB connection
+    'mir' => [
+        'driver' => 'mysql',
+        'host' => env('MIR_DB_HOST', '127.0.0.1'),
+        'port' => env('MIR_DB_PORT', '3306'),
+        'database' => env('MIR_DB_DATABASE', 'MIR_DB'),  // or use .env
+        'username' => env('MIR_DB_USERNAME', 'root'),
+        'password' => env('MIR_DB_PASSWORD', ''),
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_unicode_ci',
+        'prefix' => '',
+        'strict' => true,
+    ],
+
 ],
+
 
 
 
@@ -93,7 +108,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

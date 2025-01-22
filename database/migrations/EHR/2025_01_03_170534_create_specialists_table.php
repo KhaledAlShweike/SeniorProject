@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('specialists', function (Blueprint $table) {
+        Schema::connection('ehr')->create('specialists', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
             $table->string('last_name');

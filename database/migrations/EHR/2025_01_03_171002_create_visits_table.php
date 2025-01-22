@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lookups', function (Blueprint $table) {
+        Schema::connection('ehr')->create('visits', function (Blueprint $table) {
             $table->id();
-            $table->integer('groupId');
-            $table->string('name');
-            $table->json('data');
+            $table->dateTime('date');
+            $table->text('note');
+            $table->foreignId('case_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lookups');
+        Schema::dropIfExists('visits');
     }
 };

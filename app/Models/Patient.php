@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     use HasFactory;
+    protected $connection = 'ehr';
+
     protected $fillable = [
         'first_name',
         'last_name',

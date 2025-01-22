@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Condition extends Model
 {
     use HasFactory;
+
+    protected $connection = 'ehr';
+
     protected $fillable = ['name', 'probability'];
 
     public function diagnoses()

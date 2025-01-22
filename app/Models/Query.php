@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Query extends Model
 {
     use HasFactory;
+    protected $connection = 'ehr';
+
     protected $fillable = ['time', 'text', 'user_id'];
 
     public function user()

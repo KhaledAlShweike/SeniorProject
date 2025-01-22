@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cases', function (Blueprint $table) {
+        Schema::connection('ehr')->create('cases', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Specialist::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Patient::class)->constrained()->onDelete('cascade');

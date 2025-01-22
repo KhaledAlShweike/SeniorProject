@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('queries', function (Blueprint $table) {
+        Schema::connection('ehr')->create('conditions', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('time');
-            $table->text('text');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->string('name');
+            $table->float('probability');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('queries');
+        Schema::dropIfExists('conditions');
     }
 };

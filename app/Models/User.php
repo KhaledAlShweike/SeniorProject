@@ -9,6 +9,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, HasApiTokens;
+    protected $connection = 'ehr';
+
     protected $fillable = [
         'first_name', 'last_name', 'user_name', 'email', 'password', 'birthdate', 'gender', 'bio', 'profile_pic_url'
     ];
