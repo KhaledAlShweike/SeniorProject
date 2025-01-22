@@ -44,7 +44,7 @@ class CasesController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'is_private' => 'boolean',
+            'is_private' => 'required|in:0,1',
             'treatment_plan' => 'nullable|string',
         ]);
 

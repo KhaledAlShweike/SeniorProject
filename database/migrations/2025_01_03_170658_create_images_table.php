@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('case_id')->constrained()->onDelete('cascade');
             $table->date('date');
             $table->boolean('is_private');
             $table->integer('body_part')->nullable();
             $table->boolean('uploaded_by_patient');
-            $table->foreignId('case_id')->references('id')->on('cases');
             $table->timestamps();
         });
     }
