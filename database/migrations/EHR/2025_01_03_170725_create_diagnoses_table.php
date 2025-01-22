@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('condition_id')->references('id')->on('conditions');
             $table->foreignId('symptom_id')->references('id')->on('symptoms');
+            $table->foreignId('case_id')->constrained()->onDelete('cascade');
             $table->boolean('probability');
             $table->dateTime('last_updated');
             $table->timestamps();

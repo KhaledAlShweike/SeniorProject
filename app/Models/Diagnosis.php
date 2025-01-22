@@ -22,4 +22,8 @@ class Diagnosis extends Model
     {
         return $this->belongsTo(Symptom::class);
     }
+    public function case()
+    {
+        return $this->belongsTo(Cases::class, 'case_id');
+    }
 }
