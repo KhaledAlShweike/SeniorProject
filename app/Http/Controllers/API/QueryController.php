@@ -13,8 +13,8 @@ class QueryController extends Controller
     public function submitQuery(Request $request)
     {
         $data = $request->validate([
-            'type' => 'required|in:text,image,voice',
-            'content' => 'required|json',
+            'type' => 'required|in:text,image',
+            'content' => 'required|text',
         ]);
 
         $query = Query::create([
