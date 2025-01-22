@@ -13,6 +13,8 @@ use App\Http\Controllers\CasesController;
 use App\Http\Controllers\VisitController;
 
 
+
+
 Route::prefix('ehr')
     ->middleware([TenantMiddleware::class])
     ->group(function () {
