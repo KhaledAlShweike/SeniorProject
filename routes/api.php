@@ -81,6 +81,8 @@ Route::prefix('ehr')
         Route::delete('visits/{id}', [VisitController::class, 'destroy']);
     });
 
+
+
 Route::prefix('mir')
     ->middleware([TenantMiddleware::class])
     ->group(function () {
@@ -164,4 +166,3 @@ Route::group([
 
 
 });*/
-
