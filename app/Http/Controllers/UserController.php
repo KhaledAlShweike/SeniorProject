@@ -84,9 +84,11 @@ class UserController
 {
     try {
         // إبطال صلاحية التوكن الحالي
-        JWTAuth::invalidate(JWTAuth::getToken());
+        
 
         return response()->json(['message' => 'Successfully logged out']);
+        JWTAuth::invalidate(JWTAuth::getToken());
+
     } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
         return response()->json(['error' => 'Invalid token'], 401);
     } catch (\Exception $e) {

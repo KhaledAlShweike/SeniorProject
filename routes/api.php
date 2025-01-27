@@ -65,9 +65,6 @@ Route::prefix('ehr')
         // User login
         Route::post('users/login', [UserController::class, 'login']);
         // User logout
-        Route::post('users/logout', [UserController::class, 'logout']);
-        // Refresh JWT token
-        Route::post('users/refresh', [UserController::class, 'refresh']);
 
         // List all visits
         Route::get('visits', [VisitController::class, 'index']);
@@ -91,7 +88,15 @@ Route::prefix('mir')
     });
 
 
-
+    Route::group([
+        'middleware' => 'api',
+        'prefix' => 'auth'
+    ], function ($router) {
+        Route::post('users/logout', [UserController::class, 'logout']);
+        // Refresh JWT token
+        Route::post('users/refresh', [UserController::class, 'refresh']);
+    
+    });
 
 
 
