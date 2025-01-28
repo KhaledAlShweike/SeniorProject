@@ -11,7 +11,9 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CasesController;
 use App\Http\Controllers\VisitController;
-
+use App\Http\Controllers\DiagnosisController;
+use App\Http\Controllers\ConditionController;
+use App\Http\Controllers\SymptomController;
 
 
 
@@ -76,6 +78,24 @@ Route::prefix('ehr')
         Route::put('visits/{id}', [VisitController::class, 'update']);
         // Delete a specific visit
         Route::delete('visits/{id}', [VisitController::class, 'destroy']);
+
+        ///////////////////////////
+        Route::post('/diagnones', [DiagnosisController::class, 'store']);
+        Route::get('getdiag', [DiagnosisController::class, 'index']);
+        Route::get('diagnosi/{id}', [DiagnosisController::class, 'show']);
+        Route::put('updiagnosi/{id}', [DiagnosisController::class, 'update']);
+        Route::delete('deldiagnosi/{id}', [DiagnosisController::class, 'destroy']);
+
+
+        //////////////////////////
+        Route::post('/conditions', [ConditionController::class, 'store']);
+        Route::delete('/conditions/{id}', [ConditionController::class, 'destroy']);
+        Route::put('/conditions/{id}', [ConditionController::class, 'update']);
+        ///////////////////////////
+        Route::post('/symptoms', [SymptomController::class, 'store']);
+        Route::delete('/symptoms/{id}', [SymptomController::class, 'destroy']);
+        Route::put('/symptoms/{id}', [SymptomController::class, 'update']);
+
     });
 
 

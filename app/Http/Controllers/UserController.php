@@ -78,28 +78,18 @@ class UserController
         // استجابة مع التوكن
         return $this->respondWithToken($token);
     }
-
-    // تسجيل الخروج
     public function logout()
-{
-    try {
-        // إبطال صلاحية التوكن الحالي
-        
-
-        return response()->json(['message' => 'Successfully logged out']);
+    {
         JWTAuth::invalidate(JWTAuth::getToken());
-
-    } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-        return response()->json(['error' => 'Invalid token'], 401);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'An error occurred while logging out'], 500);
+        return response()->json(['message' => 'Successfully logged out']);
     }
-}
-
+    
+    
+    
     // تحديث التوكن
     public function refresh()
     {
-        return $this->respondWithToken(JWTAuth::refresh());
+        return $this->respondWithToken(JWTAuth::refresh(JWTAuth::getToken()));
     }
 
     // رد التوكن
@@ -108,7 +98,8 @@ class UserController
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => config('jwt.ttl') * 60  // استخدام ttl من إعدادات JWT
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
+            
         ]);
     }
 
