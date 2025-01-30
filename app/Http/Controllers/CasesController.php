@@ -59,4 +59,66 @@ class CasesController extends Controller
         $case->delete();
         return response()->json(['message' => 'Case deleted successfully'], 200);
     }
+    public function getCaseByPatientId($patient_id, $case_id)
+{
+    // البحث عن الحالة الطبية الخاصة بالمريض المحدد
+    $case = Cases::where('patient_id', $patient_id)
+                 ->where('id', $case_id)
+                 ->with(['specialist', 'diagnoses', 'images', 'visits'])
+                 ->first();
+
+    // التحقق مما إذا كانت الحالة موجودة
+    if (!$case) {
+        return response()->json(['message' => 'Case not found for this patient'], 404);
+    }
+
+    return response()->json($case, 200);
+}
+public function getCasesByPatientId($patient_id)
+{
+    // البحث عن جميع الحالات الخاصة بالمريض مع تحميل العلاقات المرتبطة بها
+    $cases = Cases::where('patient_id', $patient_id)
+                  ->with(['specialist', 'diagnoses', 'images', 'visits'])
+                  ->get();
+
+    // التحقق مما إذا كان هناك حالات لهذا المريض
+    if ($cases->isEmpty()) {
+        return response()->json(['message' => 'No cases found for this patient'], 404);
+    }
+
+    return response()->json($cases, 200);
+}
+public function getPatientsBySpecialistId($specialist_id)
+{
+    // البحث عن جميع الحالات التي تخص هذا المتخصص
+    $cases = Cases::where('specialist_id', $specialist_id)
+                  ->with('patient') // تحميل بيانات المريض المرتبط بكل حالة
+                  ->get();
+
+    // التحقق مما إذا كان هناك مرضى تابعين لهذا المتخصص
+    if ($cases->isEmpty()) {
+        return response()->json(['message' => 'No patients found for this specialist'], 404);
+    }
+
+    // استخراج قائمة المرضى الفريدة من الحالات
+    $patients = $cases->pluck('patient')->unique('id')->values();
+
+    return response()->json($patients, 200);
+}
+public function getCasesBySpecialistId($specialist_id)
+{
+    // البحث عن جميع الحالات الخاصة بهذا المتخصص مع تحميل بيانات المريض والتشخيصات والصور والزيارات
+    $cases = Cases::where('specialist_id', $specialist_id)
+                  ->with(['patient', 'diagnoses', 'images', 'visits'])
+                  ->get();
+
+    // التحقق مما إذا كان هناك حالات لهذا المتخصص
+    if ($cases->isEmpty()) {
+        return response()->json(['message' => 'No cases found for this specialist'], 404);
+    }
+
+    return response()->json($cases, 200);
+}
+
+
 }

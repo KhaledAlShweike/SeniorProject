@@ -22,6 +22,11 @@ Route::prefix('ehr')
     ->group(function () {
         //All EHR routes here ...
         Route::resource('cases', controller: CasesController::class);
+        Route::get('/patients/{patient_id}/cases', [CasesController::class, 'getCasesByPatientId']);
+        Route::get('/specialists/{specialist_id}/patients', [CasesController::class, 'getPatientsBySpecialistId']);
+        Route::get('/specialists/{specialist_id}/cases', [CasesController::class, 'getCasesBySpecialistId']);
+
+
 
         // Add new institution
         Route::post('institutions', [InstitutionController::class, 'addInstitution']);
