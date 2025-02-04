@@ -51,33 +51,30 @@ class UserController
         ], 201);
     }
     public function login(Request $request)
-    {
-        // التحقق من المدخلات
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
-        ]);
+{
+    // Validate input
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string|min:6',
+    ]);
 
-        // الحصول على بيانات الاعتماد من الطلب
-        $credentials = $request->only('email', 'password');
+    // Find user by email
+    $user = User::where('email', $request->email)->first();
 
-        // التحقق من وجود المستخدم
-        $user = User::where('email', $credentials['email'])->first();
-
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        // إنشاء التوكن باستخدام JWT
-        $token = JWTAuth::attempt($credentials);
-
-        if (!$token) {
-            return response()->json(['error' => 'Could not create token'], 500);
-        }
-
-        // استجابة مع التوكن
-        return $this->respondWithToken($token);
+    // Check password
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
+
+    // Create a new Sanctum token
+    $token = $user->createToken('auth-token')->plainTextToken;
+
+    return response()->json([
+        'message' => 'Login successful',
+        'user' => $user,
+        'token' => $token
+    ]);
+}
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
