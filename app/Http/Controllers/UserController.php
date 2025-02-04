@@ -57,35 +57,36 @@ class UserController
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
-    
+
         // الحصول على بيانات الاعتماد من الطلب
         $credentials = $request->only('email', 'password');
-    
+
         // التحقق من وجود المستخدم
         $user = User::where('email', $credentials['email'])->first();
-    
+
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-    
+
         // إنشاء التوكن باستخدام JWT
         $token = JWTAuth::attempt($credentials);
-    
+
         if (!$token) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
-    
+
         // استجابة مع التوكن
         return $this->respondWithToken($token);
     }
-    public function logout()
+    public function logout(Request $request)
     {
-        JWTAuth::invalidate(JWTAuth::getToken());
-        return response()->json(['message' => 'Successfully logged out']);
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Logged out successfully']);
     }
-    
-    
-    
+
+
+
     // تحديث التوكن
     public function refresh()
     {
@@ -99,7 +100,7 @@ class UserController
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => JWTAuth::factory()->getTTL() * 60
-            
+
         ]);
     }
 
