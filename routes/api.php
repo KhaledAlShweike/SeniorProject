@@ -14,6 +14,7 @@ use App\Http\Controllers\VisitController;
 use App\Http\Controllers\DiagnosisController;
 use App\Http\Controllers\ConditionController;
 use App\Http\Controllers\SymptomController;
+use App\Http\Controllers\SearchController;
 
 
 
@@ -100,6 +101,8 @@ Route::prefix('ehr')
         Route::post('/symptoms', [SymptomController::class, 'store']);
         Route::delete('/symptoms/{id}', [SymptomController::class, 'destroy']);
         Route::put('/symptoms/{id}', [SymptomController::class, 'update']);
+        //////////////////////////////////////
+        Route::post('/searchh', [SearchController::class, 'search']);
 
     });
 
