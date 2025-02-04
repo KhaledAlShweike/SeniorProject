@@ -23,10 +23,10 @@ Route::get('/', function () {
 Route::prefix('ehr')->middleware([TenantMiddleware::class])->group(function () {
 
     // Cases Routes
-    Route::resource('cases', CasesController::class);
-    Route::get('/patients/{patient_id}/cases', [CasesController::class, 'getCasesByPatientId']);
-    Route::get('/specialists/{specialist_id}/patients', [CasesController::class, 'getPatientsBySpecialistId']);
-    Route::get('/specialists/{specialist_id}/cases', [CasesController::class, 'getCasesBySpecialistId']);
+    Route::apiResource('cases', CasesController::class);
+    Route::get('patients/{patient_id}/cases', [CasesController::class, 'getCasesByPatientId']);
+    Route::get('specialists/{specialist_id}/patients', [CasesController::class, 'getPatientsBySpecialistId']);
+    Route::get('specialists/{specialist_id}/cases', [CasesController::class, 'getCasesBySpecialistId']);
 
     // Institution Routes
     Route::apiResource('institutions', InstitutionController::class);
@@ -60,11 +60,14 @@ Route::prefix('ehr')->middleware([TenantMiddleware::class])->group(function () {
 
     // Admin Routes
     Route::post('/admin/login', [AdminController::class, 'login']);
+
+    // Sanctum-Protected Admin Routes
     Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         Route::get('/specialists/pending', [AdminController::class, 'getPendingSpecialists']);
         Route::put('/specialists/{id}/approve', [AdminController::class, 'updateSpecialistStatus']);
-        Route::apiResource('doctors', AdminController::class)->only(['index', 'store', 'update', 'destroy']);
-        Route::apiResource('institutions', AdminController::class)->only(['index', 'store', 'update', 'destroy']);
+
+        // Admin can also manage institutions
+        Route::apiResource('institutions', InstitutionController::class)->only(['index', 'store', 'update', 'destroy']);
     });
 });
 
@@ -73,8 +76,8 @@ Route::prefix('mir')->middleware([TenantMiddleware::class])->group(function () {
     // Define MIR-specific routes here...
 });
 
-// JWT Authentication Routes
-Route::prefix('auth')->middleware('api')->group(function () {
+// Sanctum Authentication Routes
+Route::middleware('auth:sanctum')->prefix('auth')->group(function () {
     Route::post('logout', [UserController::class, 'logout']);
     Route::post('refresh', [UserController::class, 'refresh']);
 });
