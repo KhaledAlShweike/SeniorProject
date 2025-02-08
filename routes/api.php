@@ -14,10 +14,9 @@ use App\Http\Controllers\VisitController;
 use App\Http\Controllers\DiagnosisController;
 use App\Http\Controllers\ConditionController;
 use App\Http\Controllers\SymptomController;
-use App\Http\Controllers\SearchController;
 
 
-
+/*
 Route::prefix('ehr')
     ->middleware([TenantMiddleware::class])
     ->group(function () {
@@ -103,10 +102,6 @@ Route::prefix('ehr')
         Route::put('/symptoms/{id}', [SymptomController::class, 'update']);
         //////////////////////////////////////
         Route::post('/searchh', [SearchController::class, 'search']);
-        /////////////////////////////////////////
-        Route::middleware('auth:sanctum')->group(function () {
-            Route::post('users/logout', [UserController::class, 'logout']);
-        });
 
     });
 
@@ -124,41 +119,11 @@ Route::prefix('mir')
         'middleware' => 'api',
         'prefix' => 'auth'
     ], function ($router) {
-       
+        Route::post('users/logout', [UserController::class, 'logout']);
+        // Refresh JWT token
+        Route::post('users/refresh', [UserController::class, 'refresh']);
     
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
