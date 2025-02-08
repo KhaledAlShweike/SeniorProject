@@ -103,6 +103,10 @@ Route::prefix('ehr')
         Route::put('/symptoms/{id}', [SymptomController::class, 'update']);
         //////////////////////////////////////
         Route::post('/searchh', [SearchController::class, 'search']);
+        /////////////////////////////////////////
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('users/logout', [UserController::class, 'logout']);
+        });
 
     });
 
@@ -120,9 +124,7 @@ Route::prefix('mir')
         'middleware' => 'api',
         'prefix' => 'auth'
     ], function ($router) {
-        Route::post('users/logout', [UserController::class, 'logout']);
-        // Refresh JWT token
-        Route::post('users/refresh', [UserController::class, 'refresh']);
+       
     
     });
 
