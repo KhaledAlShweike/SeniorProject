@@ -81,6 +81,61 @@ class UserController
 
         return response()->json(['message' => 'Logged out successfully']);
     }
+    public function deleteUser($id)
+{
+    $user = User::find($id);
+
+    if (!$user) {
+        return response()->json(['error' => 'User not found'], 404);
+    }
+
+    $user->delete();
+
+    return response()->json(['message' => 'User deleted successfully']);
+}
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::find($id);
+    
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    
+        // التحقق من البيانات المدخلة فقط دون فرض القيم المطلوبة
+        $validatedData = $request->validate([
+            'first_name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'user_name' => 'nullable|string|max:255|unique:users,user_name,' . $id,
+            'email' => 'nullable|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8',
+            'birthdate' => 'nullable|date',
+            'gender' => 'nullable|in:0,1',
+            'bio' => 'nullable|string',
+            'profile_pic_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        // تحديث الحقول فقط إذا تم إرسالها في الطلب
+        if ($request->filled('first_name')) $user->first_name = $validatedData['first_name'];
+        if ($request->filled('last_name')) $user->last_name = $validatedData['last_name'];
+        if ($request->filled('user_name')) $user->user_name = $validatedData['user_name'];
+        if ($request->filled('email')) $user->email = $validatedData['email'];
+        if ($request->filled('password')) $user->password = Hash::make($validatedData['password']);
+        if ($request->filled('birthdate')) $user->birthdate = $validatedData['birthdate'];
+        if ($request->filled('gender')) $user->gender = $validatedData['gender'];
+        if ($request->filled('bio')) $user->bio = $validatedData['bio'];
+    
+        // تحديث الصورة الشخصية إذا تم رفعها
+        if ($request->hasFile('profile_pic_url')) {
+            $photoPath = $request->file('profile_pic_url')->store('profile_pics', 'public');
+            $user->profile_pic_url = $photoPath;
+        }
+    
+        $user->save();
+    
+        return response()->json(['message' => 'User updated successfully', 'user' => $user]);
+    }
+    
+
 
 
 
