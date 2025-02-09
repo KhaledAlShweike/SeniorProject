@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('password');
             $table->date('birthdate')->nullable();
             $table->boolean('gender')->nullable();
-            $table->text('bio')->nullable();
             $table->string('profile_pic_url')->nullable();
             $table->timestamps();
         });

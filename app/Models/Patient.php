@@ -19,8 +19,12 @@ class Patient extends Model
     ];
 
     public function medicalRecords()
-{
-    return $this->hasMany(MedicalRecord::class);
-}
+    {
+        return $this->hasMany(MedicalRecord::class);
+    }
 
+    public function User()
+    {
+        return $this->hasOne(User::class);
+    }
 }
