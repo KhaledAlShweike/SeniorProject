@@ -11,6 +11,7 @@ class Specialist extends Model
     protected $connection = 'ehr';
 
     protected $fillable = [
+        'user_id',
         'first_name',
         'last_name',
         'degree',
@@ -34,5 +35,6 @@ class Specialist extends Model
 {
     return $this->hasMany(MedicalRecord::class);
 }
+
 
 }

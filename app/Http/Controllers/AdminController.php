@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\models\patient;
 use App\Models\Specialist;
 use App\Models\Institution;
 
@@ -155,4 +156,92 @@ class AdminController extends Controller
         Institution::findOrFail($id)->delete();
         return response()->json(['message' => 'Institution removed successfully']);
     }
+    public function getUserById($id)
+{
+    try {
+        // البحث عن المستخدم
+        $user = User::findOrFail($id);
+
+        // إذا كان المستخدم مختصًا (role = 1)، اجلب بياناته من جدول المختصين
+        if ($user->role == 1) {
+            $specialist = Specialist::where('user_id', $user->id)->first();
+
+            if ($specialist) {
+                return response()->json([
+                    'user' => $user,
+                    'specialist' => $specialist
+                ], 200);
+            }
+        }
+
+        // إذا لم يكن مختصًا، إرجاع بيانات المستخدم فقط
+        return response()->json([
+            'user' => $user
+        ], 200);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'فشل العثور على المستخدم.',
+            'details' => $e->getMessage()
+        ], 404);
+    }
+}
+public function getpatientById($id)
+{
+    // البحث عن المستخدم حسب الـ ID
+    $user = User::find($id);
+
+    if (!$user) {
+        return response()->json(['error' => 'المستخدم غير موجود'], 404);
+    }
+
+    // إذا كان دور المستخدم (role) = 2، فاجلب بياناته من جدول المرضى أيضًا
+    if ($user->role == 2) {
+        $patient = Patient::where('user_id', $user->id)->first();
+
+        if (!$patient) {
+            return response()->json(['error' => 'لم يتم العثور على معلومات المريض لهذا المستخدم'], 404);
+        }
+
+        // دمج بيانات المستخدم مع بيانات المريض
+        $userData = [
+            'id'           => $user->id,
+            'first_name'   => $user->first_name,
+            'last_name'    => $user->last_name,
+            'user_name'    => $user->user_name,
+            'email'        => $user->email,
+            'role'         => $user->role,
+            'birthdate'    => $user->birthdate,
+            'gender'       => $user->gender,
+            'status'       => $user->status,
+            'profile_pic_url' => $user->profile_pic_url,
+            'created_at'   => $user->created_at,
+            'updated_at'   => $user->updated_at,
+            'patient_info' => [
+                'patient_id'   => $patient->id,
+                'phone_number' => $patient->phone_number,
+                'created_at'   => $patient->created_at,
+                'updated_at'   => $patient->updated_at,
+            ],
+        ];
+
+        return response()->json($userData, 200);
+    }
+
+    // إذا لم يكن المستخدم مريضًا، أعد بياناته فقط
+    return response()->json($user, 200);
+}
+
+public function getPatientsWithoutUser()
+{
+    // جلب جميع المرضى الذين ليس لديهم user_id مرتبط بجدول users (أي أن user_id = null)
+    $patients = Patient::whereNull('user_id')->get();
+
+    if ($patients->isEmpty()) {
+        return response()->json(['message' => 'لا يوجد مرضى غير مرتبطين بمستخدم'], 200);
+    }
+
+    return response()->json($patients, 200);
+}
+
 }

@@ -20,8 +20,7 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->boolean('gender')->nullable();
             $table->string('phone_number')->nullable();
-            $table->foreignIdFor(Specialist::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

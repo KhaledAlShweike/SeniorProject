@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Middleware\TenantMiddleware;
 use Illuminate\Http\Request;
@@ -50,7 +50,7 @@ Route::prefix('ehr')
         // List all patients
         Route::get('patients', [PatientController::class, 'index']);
         // Create a new patient
-        Route::post('patients', [PatientController::class, 'store']);
+        Route::post('patients', [PatientController::class, 'createPatient']);
         // Get a specific patient by ID
         Route::get('patients/{id}', [PatientController::class, 'show']);
         // Update a specific patient
@@ -60,13 +60,14 @@ Route::prefix('ehr')
 
 
         // Register a new specialist
-        Route::post('specialists', [SpecialistController::class, 'register']);
+        Route::post('/specialists/register', [SpecialistController::class, 'registerSpecialist']);
+        
         // List all specialists
         Route::get('specialists', [SpecialistController::class, 'index']);
         // Update an existing specialist
         Route::put('specialists/{id}', [SpecialistController::class, 'updateSpecialist']);
         // Delete a specialist
-        Route::delete('specialists/{id}', [SpecialistController::class, 'deleteSpecialist']);
+        Route::delete('/specialists/{id}', [SpecialistController::class, 'deleteSpecialists']);
 
         // User registration
         Route::post('users/register', [UserController::class, 'register']);
@@ -109,7 +110,16 @@ Route::prefix('ehr')
             Route::delete('/user/{id}', [UserController::class, 'deleteUser']);  // حذف مستخدم
             Route::put('/user/{id}', [UserController::class, 'updateUser']);
         });
+        Route::post('/regitster-patien', [PatientController::class, 'registerPatient']);
+        Route::post('/specialists/register', [SpecialistController::class, 'registerSpecialist']);
+        Route::delete('/specialists/{id}', [SpecialistController::class, 'deleteSpecialists']);
+        Route::get('/userss/{id}', [AdminController::class, 'getUserById']);
+          /////////////////////////////////////
+        
 
+        Route::post('/patients/register', [PatientController::class, 'registerPatientt']);
+        Route::get('/userspatient/{id}', [AdminController::class, 'getpatientById']);
+        Route::get('/getPatientsWithoutUser', [AdminController::class, 'getPatientsWithoutUser']);  
     });
 
 

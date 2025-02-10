@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->boolean('gender')->nullable();
             $table->integer('role');
-            $table->string('status');
+            $table->boolean('status')->nullable();
             $table->string('profile_pic_url')->nullable();
             $table->timestamps();
         });

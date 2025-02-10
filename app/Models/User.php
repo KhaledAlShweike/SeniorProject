@@ -21,7 +21,8 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'birthdate',
         'gender',
-        'bio',
+        'role',
+        'status',
         'profile_pic_url'
     ];
     protected $casts = [
@@ -57,5 +58,9 @@ class User extends Authenticatable implements JWTSubject
     public function Patient()
     {
         return $this->hasOne(Patient::class);
+    }
+    public function Specialist()
+    {
+        return $this->hasOne(Specialist::class);
     }
 }
