@@ -12,13 +12,8 @@ class Symptom extends Model
 
     protected $fillable = ['name', 'is_secret'];
 
-    public function diagnoses()
+    public function CaseSymptom()
     {
-        return $this->hasMany(Diagnosis::class);
-    }
-
-    public function cases()
-    {
-        return $this->belongsToMany(Cases::class, 'case_symptoms');
+        return $this->hasMany(CaseSymptom::class); //
     }
 }

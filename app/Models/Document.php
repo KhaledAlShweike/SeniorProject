@@ -13,8 +13,8 @@ protected $connection = 'ehr';
 
     protected $fillable = ['url', 'user_id'];
 
-    public function user()
+    public function Specialist()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Specialist::class);
     }
 }

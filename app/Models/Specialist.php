@@ -21,20 +21,28 @@ class Specialist extends Model
         'institution_id'
     ];
 
-    public function institution()
+    public function Institution()
     {
-        return $this->belongsTo(Institution::class);
+        return $this->belongsToMany(Institution::class);
     }
 
-    public function cases()
+    public function Cases()
     {
         return $this->hasMany(Cases::class, 'specialist_id');
     }
 
-    public function medicalRecords()
-{
-    return $this->hasMany(MedicalRecord::class);
-}
+    public function MedicalRecord()
+    {
+        return $this->hasMany(MedicalRecord::class);
+    }
 
+    public function Document()
+    {
+        return $this->hasMany(Document::class);
+    }
 
+    public function User()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

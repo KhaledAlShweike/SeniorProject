@@ -14,8 +14,8 @@ class Image extends Model
     protected $fillable = ['date', 'is_private', 'body_part', 'uploaded_by_patient', 'case_id'];
 
 
-    public function case()
+    public function Case()
     {
-        return $this->belongsTo(Cases::class);
+        return $this->belongsTo(Cases::class); // 
     }
 }

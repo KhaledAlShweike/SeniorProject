@@ -12,18 +12,15 @@ class Query extends Model
 
     protected $fillable = ['time', 'text', 'user_id'];
 
-    public function user()
+    public function User()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class); //
     }
 
-    public function patient()
+    public function QueryImage()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->hasMany(QueryImage::class); //
     }
 
-    public function images()
-    {
-        return $this->hasMany(QueryImage::class);
-    }
+
 }

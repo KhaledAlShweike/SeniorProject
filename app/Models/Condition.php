@@ -13,7 +13,7 @@ class Condition extends Model
 
     protected $fillable = ['name', 'probability'];
 
-    public function diagnoses()
+    public function Diagnoses()
     {
         return $this->hasMany(Diagnosis::class);
     }

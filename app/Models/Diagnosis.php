@@ -13,17 +13,14 @@ class Diagnosis extends Model
 
     protected $fillable = ['condition_id', 'symptom_id', 'present', 'last_updated'];
 
-    public function condition()
+    public function Condition()
     {
-        return $this->belongsTo(Condition::class);
+        return $this->belongsTo(Condition::class); //
     }
 
-    public function symptom()
+
+    public function Case()
     {
-        return $this->belongsTo(Symptom::class);
-    }
-    public function case()
-    {
-        return $this->belongsTo(Cases::class, 'case_id');
+        return $this->belongsTo(Cases::class); //
     }
 }

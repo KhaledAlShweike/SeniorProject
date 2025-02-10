@@ -4,17 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Contact extends Model
+class Role extends Model
 {
-    use HasFactory;
-
+    use HasFactory, HasApiTokens, Notifiable;
     protected $connection = 'ehr';
-
-    protected $fillable = ['type', 'value', 'user_id'];
 
     public function User()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 }

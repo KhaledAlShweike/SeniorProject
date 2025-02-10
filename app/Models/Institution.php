@@ -13,13 +13,10 @@ class Institution extends Model
 
     protected $fillable = ['name', 'address'];
 
-    public function specialists()
+    public function Specialists()
     {
-        return $this->hasMany(Specialist::class);
+        return $this->hasMany(Specialist::class); //
     }
 
-    public function cases()
-    {
-        return $this->hasMany(Cases::class);
-    }
+
 }

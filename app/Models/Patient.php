@@ -25,8 +25,13 @@ class Patient extends Model
         return $this->hasMany(MedicalRecord::class);
     }
 
+    public function Case()
+    {
+        return $this->hasMany(Cases::class);
+    }
+
     public function User()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }

@@ -22,38 +22,28 @@ class Cases extends Model
         'treatment_plan',
     ];
 
-    public function institution()
+    public function Specialist()
     {
-        return $this->belongsTo(Institution::class);
+        return $this->belongsTo(Specialist::class); //
     }
 
-    public function specialist()
+    public function Patient()
     {
-        return $this->belongsTo(Specialist::class);
+        return $this->belongsTo(Patient::class); //
     }
 
-    public function patient()
+    public function Diagnosis()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->hasMany(Diagnosis::class); //
     }
 
-    public function images()
+    public function CaseSymptom()
     {
-        return $this->hasMany(Image::class, 'case_id');
+        return $this->hasOne(CaseSymptom::class); //
     }
 
-    public function symptoms()
+    public function Image()
     {
-        return $this->belongsToMany(Symptom::class, 'case_symptoms');
-    }
-
-    public function diagnoses()
-    {
-        return $this->hasMany(Diagnosis::class, 'case_id');
-    }
-
-    public function visits()
-    {
-        return $this->hasMany(Visit::class, 'case_id');
+        return $this->hasMany(Image::class); //
     }
 }

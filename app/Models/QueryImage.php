@@ -12,8 +12,8 @@ class QueryImage extends Model
 
     protected $fillable = ['query_id'];
 
-    public function queries()
+    public function Queries()
     {
-        return $this->belongsTo(Query::class);
+        return $this->belongsTo(Query::class); //
     }
 }

@@ -13,13 +13,13 @@ class CaseSymptom extends Model
 
     protected $fillable = ['case_id', 'symptom_id'];
 
-    public function case()
+    public function Case()
     {
-        return $this->belongsTo(Cases::class);
+        return $this->belongsTo(Cases::class); //
     }
 
-    public function symptom()
+    public function Symptom()
     {
-        return $this->belongsTo(Symptom::class);
+        return $this->belongsTo(Symptom::class); //
     }
 }

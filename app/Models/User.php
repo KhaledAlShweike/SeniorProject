@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Role;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
@@ -33,13 +34,29 @@ class User extends Authenticatable implements JWTSubject
 
     public function Patient()
     {
-        return $this->hasOne(Patient::class);
+        return $this->hasOne(Patient::class); //
     }
 
     public function Contact()
     {
-        return $this->hasOne(Patient::class);
+        return $this->hasMany(Contact::class); //
     }
+
+    public function Specialist()
+    {
+        return $this->hasOne(Specialist::class); //
+    }
+
+    public function Role()
+    {
+        return $this->hasMany(Role::class); //
+    }
+
+    public function Queries()
+    {
+        return $this->hasMany(Query::class); //
+    }
+
 
     public function getJWTIdentifier()
     {
