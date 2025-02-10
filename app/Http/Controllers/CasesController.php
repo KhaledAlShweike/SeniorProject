@@ -10,7 +10,7 @@ class CasesController extends Controller
 {
     public function index()
     {
-        $cases = Cases::with(['specialist', 'patient', 'diagnoses', 'images', 'visits'])->get();
+        $cases = Cases::with(['specialist', 'patient', 'diagnoses', 'images'])->get();
         return response()->json($cases, 200);
     }
 
@@ -37,7 +37,7 @@ class CasesController extends Controller
 
     public function show($id)
     {
-        $case = Cases::with(['specialist', 'patient', 'diagnoses', 'images', 'visits'])->findOrFail($id);
+        $case = Cases::with(['specialist', 'patient', 'diagnoses', 'images'])->findOrFail($id);
         return response()->json($case, 200);
     }
 
@@ -64,7 +64,7 @@ class CasesController extends Controller
     // البحث عن الحالة الطبية الخاصة بالمريض المحدد
     $case = Cases::where('patient_id', $patient_id)
                  ->where('id', $case_id)
-                 ->with(['specialist', 'diagnoses', 'images', 'visits'])
+                 ->with(['specialist', 'diagnoses', 'images'])
                  ->first();
 
     // التحقق مما إذا كانت الحالة موجودة
@@ -78,7 +78,7 @@ public function getCasesByPatientId($patient_id)
 {
     // البحث عن جميع الحالات الخاصة بالمريض مع تحميل العلاقات المرتبطة بها
     $cases = Cases::where('patient_id', $patient_id)
-                  ->with(['specialist', 'diagnoses', 'images', 'visits'])
+                  ->with(['specialist', 'diagnoses', 'images'])
                   ->get();
 
     // التحقق مما إذا كان هناك حالات لهذا المريض
@@ -109,7 +109,7 @@ public function getCasesBySpecialistId($specialist_id)
 {
     // البحث عن جميع الحالات الخاصة بهذا المتخصص مع تحميل بيانات المريض والتشخيصات والصور والزيارات
     $cases = Cases::where('specialist_id', $specialist_id)
-                  ->with(['patient', 'diagnoses', 'images', 'visits'])
+                  ->with(['patient', 'diagnoses', 'images'])
                   ->get();
 
     // التحقق مما إذا كان هناك حالات لهذا المتخصص

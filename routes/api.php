@@ -22,9 +22,13 @@ Route::prefix('ehr')
     ->middleware([TenantMiddleware::class])
     ->group(function () {
         //All EHR routes here ...
+        //من اجل اضافة حالة او اضبارة او حذف اضبارة او تعديل اضبارة
         Route::resource('cases', controller: CasesController::class);
+        //من اجل جلب جميع الاضابير الخاصة بمريض معين
         Route::get('/patients/{patient_id}/cases', [CasesController::class, 'getCasesByPatientId']);
+        //من اجل جلب المرضى المسوول عنهم طبيب معين
         Route::get('/specialists/{specialist_id}/patients', [CasesController::class, 'getPatientsBySpecialistId']);
+        //من اجل جلب كل الاضابير المسوول عنها طبيب معين
         Route::get('/specialists/{specialist_id}/cases', [CasesController::class, 'getCasesBySpecialistId']);
 
 
@@ -70,7 +74,7 @@ Route::prefix('ehr')
         Route::delete('/specialists/{id}', [SpecialistController::class, 'deleteSpecialists']);
 
         // User registration
-        Route::post('users/register', [UserController::class, 'register']);
+       // Route::post('users/register', [UserController::class, 'register']);
         // User login
         Route::post('users/login', [UserController::class, 'login']);
         // User logout
@@ -110,15 +114,17 @@ Route::prefix('ehr')
             Route::delete('/user/{id}', [UserController::class, 'deleteUser']);  // حذف مستخدم
             Route::put('/user/{id}', [UserController::class, 'updateUser']);
         });
-        Route::post('/regitster-patien', [PatientController::class, 'registerPatient']);
-        Route::post('/specialists/register', [SpecialistController::class, 'registerSpecialist']);
-        Route::delete('/specialists/{id}', [SpecialistController::class, 'deleteSpecialists']);
+       // Route::post('/regitster-patien', [PatientController::class, 'registerPatient']);
+
+       //جلب معلومات المختص كاملة
         Route::get('/userss/{id}', [AdminController::class, 'getUserById']);
           /////////////////////////////////////
         
-
+        //انشاء حساب للمريض ضمن تيبل المستخدم
         Route::post('/patients/register', [PatientController::class, 'registerPatientt']);
+        //جلب معلومات مريض معين من نيبل المستخدم والمريض
         Route::get('/userspatient/{id}', [AdminController::class, 'getpatientById']);
+        //جلب كل المرضى الذين ادخلو من قبل الدكتور وليس لهم حساب
         Route::get('/getPatientsWithoutUser', [AdminController::class, 'getPatientsWithoutUser']);  
     });
 
