@@ -56,5 +56,4 @@ class Cases extends Model
     {
         return $this->hasMany(Visit::class, 'case_id');
     }
-
 }

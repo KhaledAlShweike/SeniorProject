@@ -21,9 +21,9 @@ class UserController
             'password' => 'required|string|min:8',
             'birthdate' => 'nullable|date',
             'gender' => 'required|in:0,1',
-            'bio' => 'nullable|string',
             'profile_pic_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+        // $model.Role='2';
 
         // إذا كانت الصورة موجودة
         $photoPath = null;
