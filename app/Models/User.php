@@ -21,7 +21,8 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'birthdate',
         'gender',
-        'bio',
+        'role',
+        'status',
         'profile_pic_url'
     ];
     protected $casts = [
@@ -49,4 +50,5 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
 }

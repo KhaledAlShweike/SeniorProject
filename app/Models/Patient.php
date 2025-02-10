@@ -11,6 +11,8 @@ class Patient extends Model
     protected $connection = 'ehr';
 
     protected $fillable = [
+        'user_id',
+        'specialist_id',
         'first_name',
         'last_name',
         'birthdate',

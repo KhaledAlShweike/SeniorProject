@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Middleware\TenantMiddleware;
 use Illuminate\Http\Request;
@@ -22,9 +22,13 @@ Route::prefix('ehr')
     ->middleware([TenantMiddleware::class])
     ->group(function () {
         //All EHR routes here ...
+        //من اجل اضافة حالة او اضبارة او حذف اضبارة او تعديل اضبارة
         Route::resource('cases', controller: CasesController::class);
+        //من اجل جلب جميع الاضابير الخاصة بمريض معين
         Route::get('/patients/{patient_id}/cases', [CasesController::class, 'getCasesByPatientId']);
+        //من اجل جلب المرضى المسوول عنهم طبيب معين
         Route::get('/specialists/{specialist_id}/patients', [CasesController::class, 'getPatientsBySpecialistId']);
+        //من اجل جلب كل الاضابير المسوول عنها طبيب معين
         Route::get('/specialists/{specialist_id}/cases', [CasesController::class, 'getCasesBySpecialistId']);
 
 
@@ -50,7 +54,7 @@ Route::prefix('ehr')
         // List all patients
         Route::get('patients', [PatientController::class, 'index']);
         // Create a new patient
-        Route::post('patients', [PatientController::class, 'store']);
+        Route::post('patients', [PatientController::class, 'createPatient']);
         // Get a specific patient by ID
         Route::get('patients/{id}', [PatientController::class, 'show']);
         // Update a specific patient
@@ -60,16 +64,17 @@ Route::prefix('ehr')
 
 
         // Register a new specialist
-        Route::post('specialists', [SpecialistController::class, 'register']);
+        Route::post('/specialists/register', [SpecialistController::class, 'registerSpecialist']);
+        
         // List all specialists
         Route::get('specialists', [SpecialistController::class, 'index']);
         // Update an existing specialist
         Route::put('specialists/{id}', [SpecialistController::class, 'updateSpecialist']);
         // Delete a specialist
-        Route::delete('specialists/{id}', [SpecialistController::class, 'deleteSpecialist']);
+        Route::delete('/specialists/{id}', [SpecialistController::class, 'deleteSpecialists']);
 
         // User registration
-        Route::post('users/register', [UserController::class, 'register']);
+       // Route::post('users/register', [UserController::class, 'register']);
         // User login
         Route::post('users/login', [UserController::class, 'login']);
         // User logout
@@ -109,7 +114,18 @@ Route::prefix('ehr')
             Route::delete('/user/{id}', [UserController::class, 'deleteUser']);  // حذف مستخدم
             Route::put('/user/{id}', [UserController::class, 'updateUser']);
         });
+       // Route::post('/regitster-patien', [PatientController::class, 'registerPatient']);
 
+       //جلب معلومات المختص كاملة
+        Route::get('/userss/{id}', [AdminController::class, 'getUserById']);
+          /////////////////////////////////////
+        
+        //انشاء حساب للمريض ضمن تيبل المستخدم
+        Route::post('/patients/register', [PatientController::class, 'registerPatientt']);
+        //جلب معلومات مريض معين من نيبل المستخدم والمريض
+        Route::get('/userspatient/{id}', [AdminController::class, 'getpatientById']);
+        //جلب كل المرضى الذين ادخلو من قبل الدكتور وليس لهم حساب
+        Route::get('/getPatientsWithoutUser', [AdminController::class, 'getPatientsWithoutUser']);  
     });
 
 
