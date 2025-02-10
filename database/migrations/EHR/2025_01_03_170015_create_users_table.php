@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('password');
             $table->date('birthdate')->nullable();
             $table->boolean('gender')->nullable();
+            $table->integer('role');
+            $table->string('status');
             $table->string('profile_pic_url')->nullable();
             $table->timestamps();
         });
