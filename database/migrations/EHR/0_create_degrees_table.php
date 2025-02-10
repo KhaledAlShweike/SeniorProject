@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('ehr')->create('query_images', function (Blueprint $table) {
+        Schema::connection('ehr')->create('degrees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('query_id')->references('id')->on('queries');
+            $table->string('name')->unique(); // e.g., MBBS, MD, PhD
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('query_images');
+        Schema::dropIfExists('degrees');
     }
 };

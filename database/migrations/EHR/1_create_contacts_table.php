@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,10 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('ehr')->create('conditions', function (Blueprint $table) {
+        Schema::connection('ehr')->create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->float('probability');
+            $table->integer('type');
+            $table->text('value');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conditions');
+        Schema::dropIfExists('contacts');
     }
 };

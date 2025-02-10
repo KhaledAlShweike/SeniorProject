@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
+        
     }
 
     /**

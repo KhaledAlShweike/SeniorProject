@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('ehr')->create('contacts', function (Blueprint $table) {
+        Schema::connection('ehr')->create('specializations', function (Blueprint $table) {
             $table->id();
-            $table->integer('type');
-            $table->text('value');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->string('name')->unique(); // e.g., Cardiology, Neurology, Orthopedics
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('specializations');
     }
 };

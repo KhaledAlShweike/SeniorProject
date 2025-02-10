@@ -45,4 +45,19 @@ class Specialist extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function Specialisttype()
+    {
+        return $this->belongsTo(SpecialistType::class);
+    }
+
+    public function degree()
+    {
+        return $this->belongsTo(Degree::class);
+    }
+
+    public function specialization()
+    {
+        return $this->belongsTo(Specialization::class);
+    }
 }

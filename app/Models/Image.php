@@ -11,11 +11,28 @@ class Image extends Model
 
     protected $connection = 'ehr';
 
-    protected $fillable = ['date', 'is_private', 'body_part', 'uploaded_by_patient', 'case_id'];
-
+    protected $fillable = [
+        'date',
+        'url',
+        'is_private',
+        'uploaded_by_patient',
+        'type_id',       // Foreign key for Type
+        'body_part_id',  // Foreign key for BodyPart
+        'case_id'        // Foreign key for Case
+    ];
 
     public function Case()
     {
-        return $this->belongsTo(Cases::class); // 
+        return $this->belongsTo(Cases::class); //
+    }
+
+
+    public function bodyParts() {
+        return $this->belongsToMany(BodyPart::class, 'body_part_images')->withTimestamps();
+    }
+
+    public function Type()
+    {
+        return $this->belongsTo(ImageType::class);
     }
 }

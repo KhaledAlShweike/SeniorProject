@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('ehr')->create('images', function (Blueprint $table) {
+        Schema::connection('ehr')->create('roles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('case_id')->constrained()->onDelete('cascade');
-            $table->date('date');
-            $table->boolean('is_private');
-            $table->integer('body_part')->nullable();
-            $table->boolean('uploaded_by_patient');
+            $table->enum('Role',['1','2']);  // 1 = doctor , 2 = patient
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('roles');
     }
 };
