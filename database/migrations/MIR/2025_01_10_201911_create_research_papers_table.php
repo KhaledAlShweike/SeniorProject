@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::connection('mir')->create('research_papers', function (Blueprint $table) {
             $table->id();
+            $table->string('pmc_id');
             $table->string('title');
+            $table->string('abstract');
             $table->string('url');
+            $table->string('publication_year');
             $table->timestamps();
         });
     }

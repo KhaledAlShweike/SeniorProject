@@ -11,5 +11,11 @@ class ResearchPaper extends Model
     protected $connection = 'mir';
 
 
-    protected $fillable = ['title', 'url'];
+    protected $fillable = [
+        'pmc_id',
+        'title',
+        'abstract',
+        'url',
+        'publication_year'
+    ];
 }
