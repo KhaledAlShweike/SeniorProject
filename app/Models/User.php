@@ -30,20 +30,16 @@ class User extends Authenticatable implements JWTSubject
 
     protected $hidden = ['password'];
 
-    public function documents()
+    public function Patient()
     {
-        return $this->hasMany(Document::class);
+        return $this->hasOne(Patient::class);
     }
 
-    public function contacts()
+    public function Contact()
     {
-        return $this->hasMany(Contact::class);
+        return $this->hasOne(Patient::class);
     }
 
-    public function queries()
-    {
-        return $this->hasMany(Query::class);
-    }
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -52,10 +48,5 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-    public function Patient()
-    {
-        return $this->hasOne(Patient::class);
     }
 }
