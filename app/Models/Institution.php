@@ -18,5 +18,8 @@ class Institution extends Model
         return $this->hasMany(Specialist::class); //
     }
 
-
+    public function InstitutionType()
+    {
+        return $this->hasMany(InstitutionType::class); //
+    }
 }
